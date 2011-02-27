@@ -1,0 +1,40 @@
+PLUGIN = cvim 
+
+SOURCE = doc/csupport.txt        
+SOURCE += ftplugin/make.vim       
+SOURCE += ftplugin/c.vim          
+SOURCE += plugin/c.vim            
+SOURCE += c-support/templates/c.preprocessor.template  
+SOURCE += c-support/templates/Templates  
+SOURCE += c-support/templates/c.cpp.template  
+SOURCE += c-support/templates/cpp.idioms.template  
+SOURCE += c-support/templates/c.idioms.template  
+SOURCE += c-support/templates/cpp.preprocessor.template  
+SOURCE += c-support/templates/cpp.comments.template  
+SOURCE += c-support/templates/cpp.statements.template  
+SOURCE += c-support/templates/cpp.cpp.template  
+SOURCE += c-support/templates/c.comments.template  
+SOURCE += c-support/templates/c.statements.template  
+SOURCE += c-support/doc/c-hotkeys.pdf  
+SOURCE += c-support/doc/c-hotkeys.tex  
+SOURCE += c-support/doc/ChangeLog  
+SOURCE += c-support/scripts/wrapper.sh  
+SOURCE += c-support/wordlists/stl_index.list  
+SOURCE += c-support/wordlists/c-c++-keywords.list  
+SOURCE += c-support/wordlists/k+r.list  
+SOURCE += c-support/codesnippets/calloc_double_matrix.c  
+SOURCE += c-support/codesnippets/print_array.cc.noindent  
+SOURCE += c-support/codesnippets/Makefile.multi-target.template  
+SOURCE += c-support/codesnippets/print_int_array.c.noindent  
+SOURCE += c-support/codesnippets/calloc_int_matrix.c  
+SOURCE += c-support/codesnippets/Makefile  
+SOURCE += c-support/codesnippets/main.c  
+SOURCE += c-support/codesnippets/main.cc  
+SOURCE += c-support/codesnippets/print_double_array.c.noindent  
+SOURCE += c-support/rc/customization.vimrc  
+SOURCE += c-support/rc/customization.ctags  
+SOURCE += c-support/rc/customization.gvimrc  
+SOURCE += c-support/rc/customization.indent.pro  
+SOURCE += README.csupport     
+
+include ../common/target.mk
