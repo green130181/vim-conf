@@ -1,0 +1,171 @@
+set nobackup "关掉备份文件
+set incsearch "增量寻找
+set hlsearch "设置高亮搜索
+set number "显示行号
+set mouse=a "使用鼠标
+set encoding=utf-8
+set fileencoding=utf-8
+set fileencodings=ucs-bom,utf-8,gb18030,cp950,cp936 "设置文字编码自动识别
+set termencoding=utf-8
+set ambiwidth=double "全角字符
+set showtabline=2 "显示标签栏
+set laststatus=2 "状态栏在倒数第二行
+set backspace=indent,eol,start
+set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\[HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
+set vb t_vb= "当vim进行编辑时，如果命令错误，会发出一个响声，该设置去掉响声
+set tabstop=4 "硬TAB
+set softtabstop=4 "软TAB
+set shiftwidth=4 "缩进空格数
+set expandtab "空格替换TAB
+set completeopt=menu,longest
+set updatetime=1000
+set wildignore=.svn
+set cursorline "高亮行列
+"set cursorcolumn
+set nocompatible "不要vim模仿vi模式，建议设置，否则会有很多不兼容的问题
+
+syntax on "开启语法高亮
+filetype plugin indent on "打开文件类型检测
+
+"*****************************************************
+" a.vim map
+nnoremap <silent> <F4> :A<CR>
+
+"*****************************************************
+" armasm.vim conf
+let asmsyntax='armasm'
+let filetype_inc='armasm'
+
+"*****************************************************
+" minibufexpl.vim conf
+let g:miniBufExplMapWindowNavVim = 1
+let g:miniBufExplMapWindowNavArrows = 1
+let g:miniBufExplMapCTabSwitchBufs = 1
+let g:miniBufExplModSelTarget = 1
+let g:miniBufExplorerAutoUpdate = 0
+let g:miniBufExplorerMoreThanOne=0
+
+"*****************************************************
+" taglist.vim map
+let mapleader = ';'
+nmap <silent> <leader>l <ESC>:Tlist<CR>
+
+" taglist.vim conf
+let Tlist_Enable_Fold_Column = 0
+let Tlist_GainFocus_On_ToggleOpen = 1
+let Tlist_Show_One_File = 1
+let Tlist_Exit_OnlyWindow = 1
+let Tlist_Inc_Winwidth = 0
+let Tlist_WinWidth = 25
+let Tlist_Use_Right_Window = 1
+
+"*****************************************************
+" NERD_tree.vim conf
+"let loaded_netrwPlugin = 0
+"let loaded_nerd_tree=1
+let NERDTreeHijackNetrw = 0
+let NERDTreeChDirMode = 2
+let NERDTreeCaseSensitiveSort = 1
+let NERDTreeIgnore = [ '^\.svn$', '\~$', '\.o$', '\.lo$', '\.la$', '\.d$']
+let NERDChristmasTree=1
+let NERDTreeAutoCenter=1
+"let NERDTreeBookmarksFile=$VIM.'\bundle\nerdtree\data\nerdbookmarks.txt'
+let NERDTreeMouseMode=2
+let NERDTreeShowBookmarks=1
+let NERDTreeShowFiles=1
+let NERDTreeShowHidden=1
+let NERDTreeShowLineNumbers=1
+let NERDTreeWinPos='left'
+let NERDTreeWinSize=31
+
+" NERD_tree.vim map
+nmap <silent> <leader>e <ESC>:NERDTreeToggle<CR>
+nmap <silent> <leader>f <ESC>:NERDTreeFind<CR>
+
+" NERD_comment.vim map
+let mapleader = ','
+
+"*****************************************************
+"find /opt/hisi-linux/x86-arm/gcc-3.4.3-uClibc-0.9.28 -name /"*.h/" > /opt/hisi-linux/x86-arm/gcc-3.4.3-uClibc-0.9.28/cscope.files
+"cd /opt/hisi-linux/x86-arm/gcc-3.4.3-uClibc-0.9.28/
+"cscope -b -k -q
+if filereadable("/opt/hisi-linux/x86-arm/gcc-3.4.3-uClibc-0.9.28/cscope.out")
+    cs add /opt/hisi-linux/x86-arm/gcc-3.4.3-uClibc-0.9.28/cscope.out
+endif
+function! Updatecscope ()
+    echon "Begin updating cscope.out...!"
+	call system('cscope -Rbkq')
+    cs kill -1
+    if filereadable("cscope.out")
+        cs add cscope.out  
+    endif
+    if filereadable("/opt/hisi-linux/x86-arm/gcc-3.4.3-uClibc-0.9.28/cscope.out")
+        cs add /opt/hisi-linux/x86-arm/gcc-3.4.3-uClibc-0.9.28/cscope.out
+    endif
+    redraw
+    echon "Updating cscope... Done!"
+endfunction
+if has("cscope")
+    nmap <silent> <F6> :call Updatecscope()<CR>
+endif
+
+
+"*****************************************************
+vmap <silent> g] g<c-]>
+nmap <silent> g] g<c-]>
+"nmap <silent> <leader>t <ESC>:OmniTagsLoad tags<CR>
+"nmap <silent> <leader>l <ESC>:Tlist<CR>
+nmap <silent> <leader>c <ESC>:call BdButKeepLastWritableWindow()<CR>
+nmap <silent> <leader>g <ESC>:lv /\<<c-r><c-w>\>/j **/*.[ch]<CR>:lw<CR>
+nmap <silent> <leader>h <ESC>:lv /\<<c-r><c-w>\>/j **/*.[h]<CR>:lw<CR>
+nmap <silent> <leader>d <ESC>:lv /\<<c-r><c-w>\>/j **/*<CR>:lw<CR>
+
+
+if has("gui_running")
+    if has("win32") || has("win64")
+        au GUIEnter * simalt ~x
+        set gfn=courier_new:h10
+    endif
+
+    set go=
+    colo desert
+else
+    colo koehler
+endif
+
+au BufReadPost *
+\   if line("'\"") > 1 && line("'\"") <= line("$") |
+\       exe "normal! g'\"" |
+\   endif
+
+function! BdButKeepLastWritableWindow()
+	let currentBuf = bufnr("")
+	if ( bufname(currentBuf) == "" ) || ( getbufvar(currentBuf, "&buftype") != "" )
+		return
+	endif
+
+	let alternateBuf = 0
+	let lastBuf = bufnr("$")
+	while lastBuf > 0
+		if currentBuf == lastBuf
+			let lastBuf -= 1
+			continue
+		endif
+
+		if buflisted(lastBuf) && ( getbufvar(lastBuf, "&buftype") == "" )
+			let alternateBuf = lastBuf
+			break
+		endif
+
+		let lastBuf -= 1
+	endwhile
+
+	if alternateBuf
+		exe "b ".alternateBuf
+		exe "bd ".currentBuf
+	else
+		enew
+		exe "bd ".currentBuf
+	endif
+endfunction
+
