@@ -1,0 +1,29 @@
+\chapter{cscope}
+
+\section{功能}
+\begin{itemize}
+    \item c: Find functions calling this function
+    \item d: Find functions called by this function
+    \item e: Find this egrep pattern
+    \item f: Find this file
+    \item g: Find this definition
+    \item i: Find files \#including this file
+    \item s: Find this C symbol
+    \item t: Find assignments to
+\end{itemize}
+
+\section{配置}
+使用cscope\_macros.vim插件完成配置\\
+可以通过
+\begin{code}
+cscope -Rbkq
+cs add cscope.out  
+\end{code}
+完成自定义的cscope文件的添加
+
+\section{快捷键}
+Ctrl + \textbackslash + [cdefgist]完成一系列的查找工作\\
+Ctrl + ] || Ctrl + t同ctags一样完成跳转\\
+F6完成cscope.out文件更新
+
+\newpage

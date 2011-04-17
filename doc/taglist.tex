@@ -1,0 +1,44 @@
+\chapter{taglist}
+
+\section{功能}
+\begin{itemize}
+    \item 在垂直或者水平分割的vim窗口种显示一个文件中定义的符号
+    (函数、类、结构体、变量，等等)
+    \item 在带有界面的vim中，可以通过下拉菜单或者弹出菜单选择显示的符号
+    \item 在你更换buf或者文件的时候自动更新符号列表,当你打开一个文件时，
+    新文件中定义的符号将会被添加到文件列表，并且在所有文件中的符号都会以
+    小组的形式显示出来。
+    \item 在符号列表窗口选中一个符号名时，光标会被定位到源代码文件的符号定义处
+    \item 自动高亮显示当前符号名
+    \item 根据符号类型分组显示在折叠树中
+    \item 可以显示一个符号的作用域
+    \item 可以通过选项配置显示符号原型而不是符号名
+    \item 可以通过选项配置以名称或者时间为序显示符号
+    \item 支持以下语言文件: Assembly, ASP, Awk, Beta, C,
+      C++, C\#, Cobol, Eiffel, Erlang, Fortran, HTML, Java, Javascript, Lisp,
+      Lua, Make, Pascal, Perl, PHP, Python, Rexx, Ruby, Scheme, Shell, Slang,
+      SML, Sql, TCL, Verilog, Vim and Yacc.
+    \item 可以轻松的扩展支持新语言，同样轻松的对已支持的语言作修改。
+    \item 支持在Vim状态栏或者标题栏显示当前符号名
+    \item 符号列表和文件可以被保存并且可以恢复整个Vim会话
+    \item 可以通过命令获取当前符号的名称和原型
+    \item 与winmanager插件协同工作，使用winmanager插件，你可以
+    同时使用file explorer, buffer explorer 和 taglist插件把vim打造的像
+    IDE一样
+\end{itemize}
+
+\section{配置}
+\begin{code}
+let Tlist_Enable_Fold_Column = 0
+let Tlist_GainFocus_On_ToggleOpen = 1
+let Tlist_Show_One_File = 1
+let Tlist_Exit_OnlyWindow = 1
+let Tlist_Inc_Winwidth = 0
+let Tlist_WinWidth = 25
+let Tlist_Use_Right_Window = 1
+\end{code}
+
+\section{快捷键}
+; + l 切换taglist目录打开关闭
+
+\newpage

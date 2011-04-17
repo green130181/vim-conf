@@ -1,0 +1,161 @@
+\chapter{nerd-tree}
+
+\section{功能}
+NERD tree可以通过键盘或鼠标控制它以树状图显示文件系统,
+它甚至允许你执行一些简单的文件系统操作
+\begin{itemize}
+    \item 以层次树的形式显示文件和目录
+    \item 节点以不同高亮显示区分以下类型
+        * 文件\\
+        * 目录\\
+        * 符号链接\\
+        * windows .lnk文件\\
+        * 只读文件\\
+        * 可执行文件\\
+    \item 许多（可定制的）键值映射去操纵这个树
+        * 键值映射去打开/关闭/浏览目录节点\\
+        * 对在新的或已存在的窗口或Tab页中打开文件的映射\\
+        * 键值映射更改当前树根的路径\\
+        * 键值映射导航树\\
+        * \ldots\\
+    \item 文可以将文件和目录添加到收藏夹
+    \item 大部分NERD tree导航都可以用鼠标实现
+    \item 过滤树内容（可以在运行时切换）
+        * 自定义文件阻止过滤器，例如正在显示的vim备份文件\\
+        * 可选显示隐藏文件(.文件)\\
+        * 可选不显示文件只显示目录\\
+    \item 可以自定义NERD tree窗口的大小和位置
+    \item 可以调整树的结点排序方式
+    \item 当你浏览文件系统的时候就会有一个文件系统的模型被创建或维护。这样做有几个优点：
+        * 所有文件系统信息都被缓存了，有需要的时候只要重新读入缓存\\
+        * 如果重新浏览之后访问过的tree的一部分，结点就会以上次保持的展开或合拢的样子显示\\
+    \item 脚本可以记忆光标位置和窗口位置，所以你可以关闭树窗口，并且当你再次打开
+        （使用NERDTreeToggle）树窗口时将会展现你关闭它时候的样子
+    \item 对于多Tab，可以共享一个Tree，也可以各自拥有各自的tree，还可以混合以上两种方式
+    \item 本脚本默认覆盖默认的文件浏览器（netw），所以如果你使用:edit 编辑一个目录
+        NERD tree将会在当前窗口显示目录内容
+    \item 一个可编程的菜单系统（模拟在一个节点上右击）
+        * 一个默认的菜单插件提供了基本文件系统的操作（创建/删除/移动/复制 文件/目录）\\
+    \item 提供应用程序编程接口添加你的自定义键值映射
+\end{itemize}
+
+\section{配置}
+loaded\_nerd\_tree          不使用NerdTree脚本\\
+NERDChristmasTree           让Tree把自己给装饰得多姿多彩漂亮点\\
+NERDTreeAutoCenter          控制当光标移动超过一定距离时，是否自动将焦点调整到屏中心\\
+NERDTreeAutoCenterThreshold 与NERDTreeAutoCenter配合使用\\
+NERDTreeCaseSensitiveSort   排序时是否大小写敏感\\
+NERDTreeChDirMode           确定是否改变Vim的CWD\\
+NERDTreeHighlightCursorline 是否高亮显示光标所在行\\
+NERDTreeHijackNetrw         是否使用:edit命令时打开第二NerdTree\\
+NERDTreeIgnore              默认的“无视”文件\\
+NERDTreeBookmarksFile       指定书签文件\\
+NERDTreeMouseMode           指定鼠标模式（1.双击打开；2.单目录双文件；3.单击打开）\\
+NERDTreeQuitOnOpen          打开文件后是否关闭NerdTree窗口\\
+NERDTreeShowBookmarks       是否默认显示书签列表\\
+NERDTreeShowFiles           是否默认显示文件\\
+NERDTreeShowHidden          是否默认显示隐藏文件\\
+NERDTreeShowLineNumbers     是否默认显示行号\\
+NERDTreeSortOrder           排序规则\\
+NERDTreeStatusline          窗口状态栏\\
+NERDTreeWinPos              窗口位置（'left' or 'right'）\\
+NERDTreeWinSize             窗口宽\\
+\begin{code}
+let loaded\_nerd\_tree=1
+let NERDTreeHijackNetrw = 0
+let NERDTreeChDirMode = 2
+let NERDTreeCaseSensitiveSort = 1
+let NERDTreeIgnore = [ '\^\.svn\$', '\~$', '\.o$', '\.lo$', \
+'\.la$']
+let NERDChristmasTree=1
+let NERDTreeAutoCenter=1
+let NERDTreeBookmarksFile=\$VIM.'\bundle\nerdtree\data\
+\nerdbookmarks.txt'
+let NERDTreeMouseMode=2
+let NERDTreeShowBookmarks=1
+let NERDTreeShowFiles=1
+let NERDTreeShowHidden=1
+let NERDTreeShowLineNumbers=1
+let NERDTreeWinPos='left'
+let NERDTreeWinSize=31
+\end{code}
+
+\section{快捷键}
+\subsection{全局命令}
+:NERDTree [start-directory | bookmark]\\
+    打开一个Nerdtree，根结点由参数指定，不指定参数就是以当前目录为根结点\\
+:NERDTreeFromBookmark bookmark\\
+    打开一个Nerdtree，根结点由参数所指定的书签\\
+:NERDTreeToggle [start-directory | bookmark]\\
+    在当前Tab中如果Nerdtree已经存在，就切换显示与隐藏；\\
+    如果不存在，就相当于执行:NERDTree命令\\
+:NERDTreeMirror\\
+    从另一个Tab中共享一个NerdTree过来（在当前Tab的Tree所作的改变也反应到原Tab中）\\
+    如果总共只有一个Tree，就直接共享；如果不止一个，就会询问共享哪个\\
+:NERDTreeClose\\
+    在当前Tab中关闭Tree\\
+我们定义了;e执行:NERDTreeToggle命令\\
+
+\subsection{书签命令}
+以下命令只在在Nerdtree的buffer中有效\\
+:Bookmark name\\
+    将选中结点添加到书签列表中，并命名为name（书签名不可包含空格）；\\
+    如与现有书签重名，则覆盖现有书签。\\
+:BookmarkToRoot bookmark\\
+    以指定目录书签或文件书签的父目录作为根结点显示NerdTree\\
+:RevealBookmark bookmark\\
+    如果指定书签已经存在于当前目录树下，打开它的上层结点并选中该书签\\
+:OpenBookmark bookmark\\
+    打开指定的文件。（参数必须是文件书签）\\
+    如果该文件在当前的目录树下，则打开它的上层结点并选中该书签\\
+:ClearBookmarks [bookmarks]\\
+    清除指定书签；如未指定参数，则清除所有书签\\
+:ClearAllBookmarks\\
+    清除所有书签\\
+:ReadBookmarks\\
+    重新读入'NERDTreeBookmarksFile'中的所有书签\\
+
+\subsection{系统快捷键}
+o.......在已有窗口中打开文件、目录或书签，并跳到该窗口   \\
+go......在已有窗口中打开文件、目录或书签，但不跳到该窗口 \\
+t.......在新Tab中打开选中文件/书签，并跳到新Tab          \\
+T.......在新Tab中打开选中文件/书签，但不跳到新Tab        \\
+i.......split一个新窗口打开选中文件，并跳到该窗口        \\
+gi......split一个新窗口打开选中文件，但不跳到该窗口      \\
+s.......vsp一个新窗口打开选中文件，并跳到该窗口          \\
+gs......vsp一个新窗口打开选中文件，但不跳到该窗口        \\
+!.......执行当前文件                                     \\
+O.......递归打开选中结点下的所有目录                     \\
+x.......合拢选中结点的父目录                             \\
+X.......递归合拢选中结点下的所有目录                     \\
+e.......Edit the current dif                             \\
+\\
+双击......相当于NERDTree-o\\
+中键......对文件相当于NERDTree-i，对目录相当于NERDTree-e\\
+\\
+D.......删除当前书签\\
+       \\
+P.......跳到根结点\\
+p.......跳到父结点\\
+K.......跳到当前目录下同级的第一个结点\\
+J.......跳到当前目录下同级的最后一个结点\\
+Ctrl-j...跳到当前目录下同级的前一个结点\\
+Ctrl-k...跳到当前目录下同级的后一个结点\\
+       \\
+C.......将选中目录或选中文件的父目录设为根结点\\
+u.......将当前根结点的父目录设为根目录，并变成合拢原根结点\\
+U.......将当前根结点的父目录设为根目录，但保持展开原根结点\\
+r.......递归刷新选中目录\\
+R.......递归刷新根结点\\
+m.......显示文件系统菜单\\
+cd......将CWD设为选中目录\\
+       \\
+I.......切换是否显示隐藏文件\\
+f.......切换是否使用文件过滤器\\
+F.......切换是否显示文件\\
+B.......切换是否显示书签\\
+       \\
+q.......关闭NerdTree窗口\\
+?.......切换是否显示Quick Help\\
+\\
+\newpage

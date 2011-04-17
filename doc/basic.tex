@@ -1,0 +1,190 @@
+\chapter{vim基本用法}
+
+\section{配置}
+\begin{code}
+set nobackup "关掉备份文件
+set incsearch "增量寻找
+set hlsearch "设置高亮搜索
+set number "显示行号
+set mouse=a "使用鼠标
+set encoding=utf-8
+set fileencoding=utf-8
+set fileencodings=ucs-bom,utf-8,gb18030,cp950,cp936 "设置文字编码自动识别
+set termencoding=utf-8
+set ambiwidth=double "全角字符
+set showtabline=2 "显示标签栏
+set laststatus=2 "状态栏在倒数第二行
+set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\
+[HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
+set backspace=indent,eol,start
+set vb t_vb= "当vim进行编辑时，如果命令错误，会发出一个响声，该设置去掉响声
+set tabstop=4 "硬TAB
+set softtabstop=4 "软TAB
+set shiftwidth=4 "缩进空格数
+set expandtab "空格替换TAB
+set completeopt=menu,longest
+set updatetime=1000
+set wildignore=.svn
+set cursorline "高亮行列
+"set cursorcolumn
+set nocompatible "不要vim模仿vi模式，建议设置，否则会有很多不兼容的问题
+syntax on "开启语法高亮
+filetype plugin indent on "打开文件类型检测
+\end{code}
+
+\section{vim编码}
+\subsection{支持中文编码的基础}
+Vim要更好地支持中文编码需要两个特性：+multi\_byte和+iconv，可以用|:version|命令检查当前使用的Vim是否支持，否则的话需要重新编译。
+
+\subsection{影响中文编码的设置项}
+Vim中有几个选项会影响对多字节编码的支持：
+\begin{itemize}
+    \item encoding（enc）：encoding 是Vim的内部使用编码，encoding的设置会影响Vim内部的Buffer、消息文字等。在 Unix环境下，encoding的默认设置等于locale；Windows环境下会和当前代码页相同。在中文Windows环境下encoding的默认设置是cp936（GBK）
+    \item fileencodings（fenc）：Vim在打开文件时会根据fileencodings选项来识别文件编码，fileencodings可以同时设置多个编码，Vim会根据设置的顺序来猜测所打开文件的编码
+    \item fileencoding（fencs） ：Vim在保存新建文件时会根据fileencoding的设置编码来保存。如果是打开已有文件，Vim会根据打开文件时所识别的编码来保存，除非在保存时重新设置fileencoding
+    \item termencodings（tenc）：在终端环境下使用Vim时，通过termencoding项来告诉Vim终端所使用的编码
+\end{itemize}
+
+\subsection{Vim中的编码转换}
+Vim 内部使用iconv库进行编码转换，如果这几个选项所设置的编码不一致，Vim就有可能会转换编码。打开已有文件时会从文件编码转换到 encoding所设置的编码；保存文件时会从encoding设置的编码转换到fileencoding对应的编码。经常会看到Vim提示[已转换]，这是表明Vim内部作了编码转换。终端环境下使用Vim，会从termencoding设置的编码转换到encoding设置的编码。
+
+可以用|:help encoding-values|列出Vim支持的所有编码。
+
+\section{常用快捷键}
+\begin{code}
+  k          上
+h   l      左  右
+  j          下
+
+^        移动到该行第一个非空格的字符处
+w        向前移动一个单词，将符号或标点当作单词处理
+W        向前移动一个单词，不把符号或标点当作单词处理
+b        向后移动一个单词，把符号或标点当作单词处理
+B        向后移动一个单词，不把符号或标点当作单词处理
+0        到行首
+$        到行尾
+gg       到页首
+G        到页末
+行号+G   跳转到指定行
+Ctrl+g   查询当前行信息和当前文件信息
+
+fx       向右跳到本行字符x处（x可以是任何字符）
+Fx       向左跳到本行字符x处（x可以是任何字符）
+
+tx       和fx相同，区别是跳到字符x前
+Tx       和Fx相同，区别是跳到字符x后
+
+C-b      向上滚动一屏
+C-f      向下滚动一屏
+C-u      向上滚动半屏
+C-d      向下滚动半屏
+C-y      向上滚动一行
+C-e      向下滚动一行
+
+退出Vi
+
+ZZ：退出vi并保存
+:q! ：退出vi，不保存
+:wq ：退出vi并保存
+
+重复操作
+
+.：重复上一次操作
+
+自动补齐
+\end{code}
+
+\begin{code}
+C-n      匹配下一个关键字
+C-p      匹配上一个关键字
+
+插入
+
+o：在光标下方新开一行并将光标置于新行行首，进入插入模式。
+O：同上，在光标上方。
+
+a：在光标之后进入插入模式。
+A：同上，在光标之前。
+
+
+R：进入替换模式，直到按下Esc
+set xxx：设置XXX选项。
+
+在Vi中删除
+
+x： 删除当前光标下的字符
+dw：删除光标之后的单词剩余部分。
+d$：删除光标之后的该行剩余部分。
+dd：删除当前行。
+
+c： 功能和d相同，区别在于完成删除操作后进入INSERT MODE
+cc：也是删除当前行，然后进入INSERT MODE
+
+更改字符
+rx：将当前光标下的字符更改为x（x为任意字符） ~： 更改当前光标下的字符的大小写
+键盘宏操作
+
+qcharacter：开始录制宏，character为a到z的任意字符
+q：终止录制宏
+@character：调用先前录制的宏
+
+恢复误操作
+
+u： 撤销最后执行的命令
+U： 修正之前对该行的操作
+Ctrl+R：Redo
+
+在Vi中操作Frame
+
+\end{code}
+
+\begin{code}
+c-w c-n 增加frame
+c-w c-c 减少frame
+c-w c-w 切换frame
+c-w c-r 交换两个frame
+
+在Vi中查找
+
+/ + 字符串：即可在当前文件查找相应的字符串。
+继续查找同一个字符串，按n或/(ENTER)，若要反向继续查找，按Shift+N。
+若要逆向查找，用?代替 /
+.*[]^%~$ 在Vi中具有特殊含义，若需要查找则应该加上转义字符"\"
+
+% ：查找配对的括号。
+s/old/new/g：替换old为new，若没有g则表示只替换一个。
+若要每个替换都向用户询问则应该用gc选项
+
+查找的一些选项
+设置高亮
+
+:set hlsearch    设置高亮
+:set nohlsearch  关闭高亮
+:nohlsearch      关闭当前已经设置的高亮
+
+增量查找
+
+:set incsearch   设置增量查找
+:set noincsearch 关闭增量查找
+
+VIM中的块操作
+\end{code}
+
+\begin{code}
+Vim支持多达26个剪贴板
+
+:reg命令查看剪切板中的内容
+  选块   先用v，C-v，V选择一块，然后用y复制，再用p粘贴。
+  yy     复制当前整行
+  nyy    复制当前行开始的n行内容
+  ayy    将光标当前行复制进寄存器a
+
+以上指令皆可去掉a工作，则y,p对未命名寄存器工作（所有d,c,x,y的对象都被保存在这里）。
+剪切/复制/粘贴
+
+所有删除的内容自动被保存，可以用p键粘贴
+
+对代码自动格式化 gg=G 
+\end{code}
+
+\newpage

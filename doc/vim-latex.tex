@@ -1,0 +1,25 @@
+\chapter{ctags}
+
+\section{背景资料}
+在windows下有sourceinsight可以很方便地定位函数、变量、宏定义等，便于开发人员管理项目代码，提高开发效率，那么在Linux下如何进行类似的操作呢。
+
+\section{功能}
+\begin{itemize}
+    \item 跳转功能
+\end{itemize}
+
+
+\section{配置}
+set tags+=/opt/arm-2010q1/libtags "增加其他的tag文件
+用户可以通过命令
+\begin{code}
+ctags -f tags --c++-kinds=+p --fields=+iaS --extra=+q -R
+\end{code}
+生成自己的tags文件，同样使用set tags+=你的文件即可完成新tags的加入
+
+\section{快捷键}
+\begin{code}
+nmap <silent> <F5> :call Updatetags()<CR>
+\end{code}
+
+\newpage

@@ -1,0 +1,45 @@
+\chapter{install vim}
+
+\section{安装}
+以下方法仅限于Debian linux,其他发行版各有自己的包管理系统如rpm等等
+\begin{code}
+apt-get install vim-full
+\end{code}
+注:Debian linux默认的vim是精简版，很多功能不提供支持，需要安装其
+完整版包
+
+安装中文帮助
+\begin{code}
+wget http://cdnetworks-kr-2.dl.sourceforge.net/project/vimcdoc\
+/vimcdoc/1.8.0/vimcdoc-1.8.0.tar.gz
+tar xf vimcdoc-1.8.0.tar.gz 
+cd vimcdoc-1.8.0
+./vimcdoc.sh -i
+\end{code}
+
+\section{终端乱码问题的解决方法}
+安装vim-full后，gnome终端退出可能会乱码，这是gnome本身的问题
+可通过一下两种方法解决
+\subsection{方法一}
+在gnome-terminal的"配置文件-标题和命令-标题"中把"终端"
+前后各加一个英文空格即可
+\subsection{方法二}
+将默认的vim链接到vim.basic
+\begin{code}
+#update-alternatives --config vim
+\end{code}
+
+现有 2 个可选项，它们都提供了"vim"
+
+    选择        可选项
+\begin{code}
+-----------------------------------------------
+          1    /usr/bin/vim.tiny
+*+        2    /usr/bin/vim.gnome
+要维持缺省值[*]，按回车键，或者键入选择的编号：1
+\end{code}
+使用/usr/bin/vim.tiny来提供vim
+
+\section{使用}
+打开终端输入vim即可进入
+\newpage

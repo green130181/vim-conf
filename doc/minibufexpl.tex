@@ -1,0 +1,26 @@
+\chapter{minibufexpl}
+
+\section{功能}
+\begin{itemize}
+    \item 显示当前所有打开的buffer
+    \item 实现在buffer之间切换
+\end{itemize}
+
+\section{配置}
+let g:miniBufExplMapWindowNavVim = 1 \\
+"打开Ctrl + [hjkl]切换窗口\\
+let g:miniBufExplMapWindowNavArrows = 1 \\
+"打开Ctrl + [上下左右]切换窗口\\
+let g:miniBufExplMapCTabSwitchBufs = 1 \\
+"打开Ctrl + [Shift] + Tab切换窗口\\
+let g:miniBufExplModSelTarget = 1 \\
+"有效解决多个窗口的错误\\
+let g:miniBufExplorerMoreThanOne=0\\
+
+
+\section{快捷键}
+Ctrl + h[j,k,l]实现上下左右窗口的切换\\
+:b[bufferID]实现打开的文件buffer切换\\
+Ctrl + [shift] + Tab在minibufexpl窗口中跳转\\
+
+\newpage
