@@ -1,0 +1,39 @@
+\chapter{gdb}
+
+\section{功能}
+\begin{itemize}
+    \item vimgdb可以调用gdb程序进行源码级调试（本地远程都可以）
+\end{itemize}
+
+\section{配置}
+\begin{code}
+:set previewheight=12 "set gdb window initial height
+:run macros/gdb_mappings.vim "source key mappings listed in 
+this document
+:set asm=0 "don't show any assembly stuff
+:set gdbprg=arm-hismall-linux-gdb "set GDB invocation 
+string (default 'gdb')
+\end{code}
+
+\section{快捷键}
+打开~/.vim/macros/gdb\_mappings.vim查看快捷键映射
+
+\section{附}
+build 方法
+
+\begin{code}
+./configure --enable-luainterp=no --enable-perlinterp=yes \
+--enable-pythoninterp=yes --enable-python3interp=yes \
+--enable-pythoninterp=yes --enable-tclinterp --enable-rubyinterp \
+--enable-cscope --enable-sniff --enable-multibyte \
+enable-xim --enable-fontset --enable-gui=auto \
+--with-python-config-dir=/usr/lib/python2.5/config \
+--enable-gdb
+\end{code}
+
+vimgdb7.3 patch 下载路径
+https://github.com/larrupingpig/vimgdb-for-vim7.3
+
+打patch 方法详见patch包里面的readme.rst
+
+\newpage
