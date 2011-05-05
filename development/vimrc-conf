@@ -108,9 +108,17 @@ endfunction
 if has("cscope")
     nmap <silent> <F6> :call Updatecscope()<CR>
 endif
+"set cscopequickfix=s-,c-,d-,i-,t-,e-,f-
 
 
 "*****************************************************
+:set previewheight=12		" set gdb window initial height
+:run macros/gdb_mappings.vim	" source key mappings listed in this document
+:set asm=0				" don't show any assembly stuff
+:set gdbprg=arm-hismall-linux-gdb		" set GDB invocation string (default 'gdb')
+"*****************************************************
+
+
 vmap <silent> g] g<c-]>
 nmap <silent> g] g<c-]>
 "nmap <silent> <leader>t <ESC>:OmniTagsLoad tags<CR>

@@ -1,5 +1,6 @@
 DIRS= ./a ./armasm ./cscope_macros ./ctags ./cvim ./echofunc\
-	 ./minibufexpl ./nerdtree ./omnicppcomplete ./taglist ./vimcalc
+	 ./nerdtree ./omnicppcomplete ./taglist ./vimcalc ./gdb \
+	 ./nerdcommenter
 
 install:
 	for i in $(DIRS); do \
