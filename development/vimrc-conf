@@ -108,7 +108,7 @@ endfunction
 if has("cscope")
     nmap <silent> <F6> :call Updatecscope()<CR>
 endif
-"set cscopequickfix=s-,c-,d-,i-,t-,e-,f-
+set cscopequickfix=s-,c-,d-,i-,t-,e-,f-
 
 
 "*****************************************************
