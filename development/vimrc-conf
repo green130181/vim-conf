@@ -114,10 +114,10 @@ set cscopequickfix=s-,c-,d-,i-,t-,e-,f-
 "*****************************************************
 :set previewheight=12		" set gdb window initial height
 :run macros/gdb_mappings.vim	" source key mappings listed in this document
-:set asm=0				" don't show any assembly stuff
+:set asm=1				" don't show any assembly stuff
 :set gdbprg=arm-hismall-linux-gdb		" set GDB invocation string (default 'gdb')
 "*****************************************************
-
+let g:ackprg="ack-grep"
 
 vmap <silent> g] g<c-]>
 nmap <silent> g] g<c-]>
@@ -176,4 +176,54 @@ function! BdButKeepLastWritableWindow()
 		exe "bd ".currentBuf
 	endif
 endfunction
+
+
+""""""""""""""""""""""""""""""
+" lookupfile setting
+" copy form http://easwy.com/blog/archives/advanced-vim-skills-lookupfile-plugin/
+""""""""""""""""""""""""""""""
+"generate tag file for lookupfile plugin
+function! Updatelookupfile ()
+    echon "Begin update lookupfile ...!"
+    redraw
+	call system('echo -e "!_TAG_FILE_SORTED\t2\t/2=foldcase/" > filenametags')
+    call system('find . -not -regex ".*\.\(png\|gif\|svn-base\)" -type f -printf "%f\t%p\t1\n" | sort -f >> filenametags')
+    echon "Updating lookupfile ... Done!"
+endfunction
+" lookup file with ignore case
+function! LookupFile_IgnoreCaseFunc(pattern)
+    let _tags = &tags
+    try
+        let &tags = eval(g:LookupFile_TagExpr)
+        let newpattern = '\c' . a:pattern
+        let tags = taglist(newpattern)
+    catch
+        echohl ErrorMsg | echo "Exception: " . v:exception | echohl NONE
+        return ""
+    finally
+        let &tags = _tags
+    endtry
+
+    " Show the matches for what is typed so far.
+    let files = map(tags, 'v:val["filename"]')
+    return files
+endfunction
+let g:LookupFile_LookupFunc = 'LookupFile_IgnoreCaseFunc'
+
+let g:LookupFile_MinPatLength = 2               "最少输入2个字符才开始查找
+let g:LookupFile_PreserveLastPattern = 0        "不保存上次查找的字符串
+let g:LookupFile_PreservePatternHistory = 1     "保存查找历史
+let g:LookupFile_AlwaysAcceptFirst = 1          "回车打开第一个匹配项目
+let g:LookupFile_AllowNewFiles = 0              "不允许创建不存在的文件
+if filereadable("./filenametags")                "设置tag文件的名字
+let g:LookupFile_TagExpr = '"./filenametags"'
+endif
+"映射LookupFile为,lk
+nmap <silent> <leader>lk :LUTags<cr>
+"映射LUBufs为,ll
+nmap <silent> <leader>ll :LUBufs<cr>
+"映射LUWalk为,lw
+nmap <silent> <leader>lw :LUWalk<cr>
+"映射Updatelookupfile 为,lup
+nmap <silent> <leader>lp :call Updatelookupfile()<cr>
 
