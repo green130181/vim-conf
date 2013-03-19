@@ -229,3 +229,9 @@ nmap <silent> <leader>lw :LUWalk<cr>
 nmap <silent> <leader>lp :call Updatelookupfile()<cr>
 
 "CommandT 取代LookupFile利器  ,t 打开CommandT
+"powerline{ 
+set guifont=PowerlineSymbols\ for\ Powerline 
+set nocompatible 
+set t_Co=256 
+let g:Powerline_symbols = 'fancy' 
+"} 
