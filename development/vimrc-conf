@@ -11,7 +11,8 @@ set ambiwidth=double "全角字符
 set showtabline=2 "显示标签栏
 set laststatus=2 "状态栏在倒数第二行
 set backspace=indent,eol,start
-set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\[HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
+"set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\[HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
+"由vim-powerline取代
 set vb t_vb= "当vim进行编辑时，如果命令错误，会发出一个响声，该设置去掉响声
 set tabstop=4 "硬TAB
 set softtabstop=4 "软TAB
@@ -227,5 +228,4 @@ nmap <silent> <leader>lw :LUWalk<cr>
 "映射Updatelookupfile 为,lup
 nmap <silent> <leader>lp :call Updatelookupfile()<cr>
 
-"CommandT 取代LookupFile利器
-nmap <silent> <leader>oo :call CommandT()<cr>
+"CommandT 取代LookupFile利器  ,t 打开CommandT
