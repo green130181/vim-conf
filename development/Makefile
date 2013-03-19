@@ -6,6 +6,7 @@ install:
 	for i in $(DIRS); do \
 		$(MAKE) -C $$i install || exit 1; done
 	cp vimrc-conf ~/.vimrc
+	cp -r vim-powerline-develop/* /root/.vim
 	./install-vbas.sh
 
 
