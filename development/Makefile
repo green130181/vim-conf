@@ -6,7 +6,8 @@ install:
 	for i in $(DIRS); do \
 		$(MAKE) -C $$i install || exit 1; done
 	cp vimrc-conf ~/.vimrc
-	vim visincr.vba -s ./common/install-vba.vim
+	./install-vbas.sh
+
 
 uninstall:
 	for i in $(DIRS); do \

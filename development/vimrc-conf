@@ -227,3 +227,5 @@ nmap <silent> <leader>lw :LUWalk<cr>
 "映射Updatelookupfile 为,lup
 nmap <silent> <leader>lp :call Updatelookupfile()<cr>
 
+"CommandT 取代LookupFile利器
+nmap <silent> <leader>oo :call CommandT()<cr>
