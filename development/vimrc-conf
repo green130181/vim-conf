@@ -113,10 +113,10 @@ set cscopequickfix=s-,c-,d-,i-,t-,e-,f-
 
 
 "*****************************************************
-:set previewheight=12		" set gdb window initial height
-:run macros/gdb_mappings.vim	" source key mappings listed in this document
-:set asm=1				" don't show any assembly stuff
-:set gdbprg=arm-hismall-linux-gdb		" set GDB invocation string (default 'gdb')
+":set previewheight=12		" set gdb window initial height
+":run macros/gdb_mappings.vim	" source key mappings listed in this document
+":set asm=1				" don't show any assembly stuff
+":set gdbprg=arm-hismall-linux-gdb		" set GDB invocation string (default 'gdb')
 "*****************************************************
 let g:ackprg="ack-grep"
 
